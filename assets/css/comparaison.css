@@ -1,0 +1,95 @@
+/* Container & Title */
+.container h2 {
+    color: #d4af37;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Table */
+table.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1a1a1a;
+    color: #eee;
+}
+
+table.table thead {
+    background: #0b0b0b;
+    color: #d4af37;
+}
+
+table.table th, table.table td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+table.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+table.table tbody tr:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+}
+
+/* Highlight Best Car */
+.table-success {
+    background-color: rgba(212, 175, 55, 0.3) !important;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* Score column bold */
+table.table tbody tr td:last-child {
+    font-weight: 600;
+}
+
+/* Alert best car */
+.alert-success {
+    background-color: #1a1a1a;
+    color: #d4af37;
+    border: 2px solid #d4af37;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    table.table thead {
+        display: none;
+    }
+
+    table.table, table.table tbody, table.table tr, table.table td {
+        display: block;
+        width: 100%;
+    }
+
+    table.table tr {
+        margin-bottom: 15px;
+        border-bottom: 1px solid #333;
+    }
+
+    table.table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    table.table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        font-weight: 600;
+        text-align: left;
+        color: #d4af37;
+    }
+}

@@ -1,0 +1,289 @@
+/* GENERAL */
+body {
+    background: #0a0a0a;
+    color: #ddd;
+    font-family: 'Poppins', sans-serif;
+}
+
+.gold { color: #d4af37; }
+
+/* HERO SLIDER */
+.hero-slider {
+    position: relative;
+    height: 85vh;
+    overflow: hidden;
+}
+
+.hero-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    animation: slideShow 18s infinite;
+    opacity: 0;
+}
+
+
+.hero-slider .slide:nth-child(1) { animation-delay: 0s; }
+.hero-slider .slide:nth-child(2) { animation-delay: 6s; }
+.hero-slider .slide:nth-child(3) { animation-delay: 12s; }
+
+@keyframes slideShow {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    30% { opacity: 1; }
+    40% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* HERO CONTENT */
+.hero-content {
+    position: absolute;
+    z-index: 10;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 55px;
+    font-weight: 800;
+    animation: fadeInUp 1s;
+}
+
+.hero-content p {
+    font-size: 20px;
+    animation: fadeInUp 1.5s;
+}
+
+.btn-hero {
+    margin-top: 20px;
+    padding: 12px 35px;
+    font-size: 18px;
+    border-radius: 50px;
+    background: #d4af37;
+    color: black;
+    font-weight: bold;
+    transition: 0.3s;
+    animation: fadeInUp 2s;
+}
+
+.btn-hero:hover {
+    background: #b8912d;
+}
+
+/* FADE ANIMATION */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* FEATURES */
+.features .feature-card {
+    padding: 30px;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 15px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 0 20px #d4af3733;
+}
+
+.feature-icon {
+    font-size: 40px;
+    color: #d4af37;
+    margin-bottom: 15px;
+}
+
+/* CARS */
+.car-card {
+    background: #111;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid #222;
+    transition: 0.3s;
+}
+
+.car-card:hover {
+    box-shadow: 0 0 25px #d4af3722;
+    transform: translateY(-8px);
+}
+
+.car-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.car-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.btn-view {
+    background: #d4af37;
+    padding: 8px 20px;
+    border-radius: 30px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-view:hover {
+    background: #b8912d;
+}
+
+/* CTA */
+.cta {
+    padding: 60px 0;
+    background: #111;
+}
+
+.btn-cta {
+    background: none;
+    border: 2px solid #d4af37;
+    padding: 12px 40px;
+    border-radius: 30px;
+    font-size: 20px;
+    color: #d4af37;
+    transition: 0.3s;
+}
+
+.btn-cta:hover {
+    background: #d4af37;
+    color: black;
+}
+.car-info .btn-view {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px; /* مسافة بين الأزرار */
+    padding: 8px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.car-info .btn-view:hover {
+    transform: translateY(-2px);
+    background-color: #ffc107;
+    color: #111;
+}
+
+.car-info .d-flex.flex-column {
+    margin-top: 10px;
+}
+/* ============================= */
+/*      SEARCH FORM (PRO)        */
+/* ============================= */
+
+.search-section {
+  margin-top: -70px;            /* يطلع الفرم فوق شوية */
+  position: relative;
+  z-index: 10;
+}
+
+.search-box {
+  background: linear-gradient(135deg, #0f0f0f, #161616);
+  padding: 28px;
+  border-radius: 22px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto;
+  gap: 16px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.65);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+/* SELECT + INPUT */
+.search-box select {
+  background: #1c1c1c;
+  color: #eee;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #2b2b2b;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+/* Hover + Focus */
+.search-box select:hover,
+.search-box select:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 2px rgba(212,175,55,0.15);
+}
+
+/* BUTTON */
+.search-box button {
+  background: linear-gradient(135deg, #ff3c00, #ff5e2b);
+  color: #fff;
+  border: none;
+  padding: 14px 30px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.search-box button:hover {
+  background: linear-gradient(135deg, #ff5e2b, #ff3c00);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255,60,0,0.35);
+}
+
+/* MOBILE */
+@media (max-width: 992px) {
+  .search-box {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .search-box button {
+    grid-column: span 2;
+  }
+}
+.car-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-fav, .btn-buy {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.btn-fav {
+    background: #222;
+    color: #d4af37;
+    border: 1px solid #d4af37;
+}
+
+.btn-buy {
+    background: #d4af37;
+    color: #000;
+}
+
+
+@media (max-width: 576px) {
+  .search-box {
+    grid-template-columns: 1fr;
+  }
+
+  .search-section {
+    margin-top: -30px;
+  }
+}
