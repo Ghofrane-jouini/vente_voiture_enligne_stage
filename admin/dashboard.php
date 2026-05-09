@@ -10,6 +10,7 @@ $total_voitures = $stmt->fetch(PDO::FETCH_ASSOC)['total_voitures'];
 //  Voiture la plus chère
 $stmt = $conn->query("SELECT marque, modele, prix FROM voiture ORDER BY prix DESC LIMIT 1");
 $most_expensive = $stmt->fetch(PDO::FETCH_ASSOC);
+
 //  Voiture la moins chère
 $stmt = $conn->query("SELECT marque, modele, prix FROM voiture ORDER BY prix ASC LIMIT 1");
 $least_expensive_car = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,8 +34,8 @@ $energie_distribution = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt = $conn->query("SELECT boite, COUNT(*) as total FROM voiture GROUP BY boite");
 $boite_distribution = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//  Dernières voitures ajoutées
-$stmt = $conn->query("SELECT * FROM voiture ORDER BY date_ajout DESC LIMIT 5");
+//  Dernières voitures ajoutées (created_at au lieu de date_ajout)
+$stmt = $conn->query("SELECT * FROM voiture ORDER BY created_at DESC LIMIT 5");
 $latest_cars = $stmt->fetchAll();
 
 //  Toutes les voitures pour le tableau complet
@@ -72,7 +73,8 @@ $latest_sales = $stmt->fetchAll();
 
 ?>
 
-<link rel="stylesheet" href="../assets/css/global.css"><a href="../index.php" class="btn mt-3">← Retour</a>
+<link rel="stylesheet" href="../assets/css/global.css">
+<a href="../index.php" class="btn mt-3">← Retour</a>
 
 <div class="container py-5">
     <h3 class="mb-4"> Gestion des voitures</h3>
@@ -103,13 +105,12 @@ $latest_sales = $stmt->fetchAll();
                 <?php endif; ?>
             </div>
         </div>
-
         <div class="col-md-3">
             <div class="card stat-card">
                 <h4>Plus favorite</h4>
                 <?php if($most_favorite): ?>
                     <p><?= $most_favorite['marque'].' '.$most_favorite['modele'] ?></p>
-                    <p class="stat-number"><?= $most_favorite['total'] ?> </p>
+                    <p class="stat-number"><?= $most_favorite['total'] ?> ❤️</p>
                 <?php else: ?>
                     <p>Aucune</p>
                 <?php endif; ?>
@@ -117,7 +118,7 @@ $latest_sales = $stmt->fetchAll();
         </div>
 
         <!-- Statistiques utilisateurs -->
-        <div class="col-md-3">
+        <div class="col-md-3 mt-3">
             <div class="card stat-card">
                 <h4>Utilisateurs</h4>
                 <p>Total: <?= $total_users ?></p>
@@ -126,33 +127,33 @@ $latest_sales = $stmt->fetchAll();
         </div>
     </div>
 
-    <!--  Nouvelles cards: ventes agence -->
+    <!-- Nouvelles cards: ventes agence -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card stat-card">
-                <h4>Total ventes agence </h4>
+                <h4>Total ventes agence</h4>
                 <p class="stat-number"><?= $total_ventes ?></p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card stat-card">
-                <h4>Chiffre d’affaires </h4>
+                <h4>Chiffre d'affaires</h4>
                 <p class="stat-number"><?= number_format($ca_agence,3,'.',' ') ?> DT</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card stat-card">
-                <h4>Quantite totale des Voitures </h4>
+                <h4>Quantité totale des Voitures</h4>
                 <p class="stat-number"><?= $voitures_restantes ?></p>
             </div>
         </div>
     </div>
 
-    <!--  Cars vendues : plus chère et moins chère -->
+    <!-- Cars vendues : plus chère et moins chère -->
     <div class="row mb-4">
         <div class="col-md-6">
             <div class="card stat-card">
-                <h4>Voiture la plus chère vendue </h4>
+                <h4>Voiture la plus chère vendue</h4>
                 <?php if($most_expensive_sold): ?>
                     <p><?= $most_expensive_sold['marque'].' '.$most_expensive_sold['modele'] ?></p>
                     <p class="stat-number"><?= number_format($most_expensive_sold['prix_vente'],3,'.',' ') ?> DT</p>
@@ -163,7 +164,7 @@ $latest_sales = $stmt->fetchAll();
         </div>
         <div class="col-md-6">
             <div class="card stat-card">
-                <h4>Voiture la moins chère vendue </h4>
+                <h4>Voiture la moins chère vendue</h4>
                 <?php if($least_expensive_sold): ?>
                     <p><?= $least_expensive_sold['marque'].' '.$least_expensive_sold['modele'] ?></p>
                     <p class="stat-number"><?= number_format($least_expensive_sold['prix_vente'],3,'.',' ') ?> DT</p>
@@ -217,7 +218,6 @@ $latest_sales = $stmt->fetchAll();
 
     <!-- Tableau des voitures -->
     <h4 class="mb-3">Gestion des Voitures</h4>
-
     <a href="add_car.php" class="btn btn-success mb-3">Ajouter Voiture</a>
 
     <table class="table table-bordered">
@@ -230,7 +230,6 @@ $latest_sales = $stmt->fetchAll();
             <th>Image</th>
             <th>Actions</th>
         </tr>
-
         <?php foreach($voitures as $v): ?>
             <tr>
                 <td><?= $v['id'] ?></td>
@@ -250,3 +249,5 @@ $latest_sales = $stmt->fetchAll();
 
     <a href="../index.php" class="btn mt-3">← Retour</a>
 </div>
+
+<?php include "../includes/footer.php"; ?>

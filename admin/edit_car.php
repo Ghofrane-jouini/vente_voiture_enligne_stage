@@ -1,7 +1,6 @@
 <?php 
-include "../auth/auth.php";
+session_start();
 include "../config/db.php";
-include "../includes/header.php";
 
 $id = $_GET['id'];
 // Récupérer les infos de la voiture
@@ -30,7 +29,6 @@ if (isset($_POST['modifier'])) {
     $promo = isset($_POST['promo']) ? 1 : 0;
     $nouveaute = isset($_POST['nouveaute']) ? 1 : 0;
 
-    // Gérer l'upload de l'image
     if (!empty($_FILES['image']['name'])) {
         $image = $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], "../assets/uploads/" . $image);
@@ -38,7 +36,6 @@ if (isset($_POST['modifier'])) {
         $image = $v['image'];
     }
 
-    // Mettre à jour la voiture dans la base de données
     $stmt2 = $conn->prepare("
         UPDATE voiture SET
         marque=?, modele=?, prix=?, energie=?, garantie=?,
@@ -55,14 +52,17 @@ if (isset($_POST['modifier'])) {
         $image, $promo, $nouveaute, $quantite, $id
     ]);
 
-    header("Location: dashboard.php");
+    header("Location: ../index.php");
     exit;
 }
+
+// Inclure header APRES toute la logique
+include "../includes/header.php";
 ?>
 
 <link rel="stylesheet" href="../assets/css/global.css">
 <div class="add-car-container">
-    <h3> Modifier la voiture</h3>
+    <h3>Modifier la voiture</h3>
 
     <form method="POST" enctype="multipart/form-data">
 
@@ -98,7 +98,6 @@ if (isset($_POST['modifier'])) {
             </select>
 
             <input type="number" name="puissance_fiscale" value="<?= $v['puissance_fiscale'] ?>">
-
             <input type="number" name="quantite" value="<?= $v['quantite'] ?>" min="1" required>
         </div>
 
@@ -106,7 +105,7 @@ if (isset($_POST['modifier'])) {
         <img src="../assets/uploads/<?= $v['image'] ?>" width="120" style="border-radius:10px">
 
         <label class="file-label">
-             Changer l’image
+            Changer l'image
             <input type="file" name="image">
         </label>
 

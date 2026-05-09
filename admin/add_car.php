@@ -1,11 +1,8 @@
 <?php 
-include "../auth/auth.php";
+session_start();
 include "../config/db.php";
-include "../includes/header.php";
 
-//  Ajouter voiture
 if (isset($_POST['ajouter'])) {
-    // Récupérer les données du formulaire
     $marque = $_POST['marque'];
     $modele = $_POST['modele'];
     $prix = $_POST['prix'];
@@ -21,12 +18,10 @@ if (isset($_POST['ajouter'])) {
     $promo = isset($_POST['promo']) ? 1 : 0;
     $nouveaute = isset($_POST['nouveaute']) ? 1 : 0;
 
-    // Gérer l'upload de l'image
     $image = $_FILES['image']['name'];
     $tmp = $_FILES['image']['tmp_name'];
     move_uploaded_file($tmp, "../assets/uploads/" . $image);
 
-    // Insert dans BDD
     $stmt = $conn->prepare("
         INSERT INTO voiture
         (marque, modele, prix, energie, garantie, nombre_places, nombre_portes,
@@ -41,9 +36,12 @@ if (isset($_POST['ajouter'])) {
         $image, $promo, $nouveaute, $quantite
     ]);
 
-    header("Location: dashboard.php");
+    header("Location: ../index.php");
     exit;
 }
+
+// Header APRES toute la logique
+include "../includes/header.php";
 ?>
 
 <link rel="stylesheet" href="../assets/css/global.css">
@@ -88,7 +86,7 @@ if (isset($_POST['ajouter'])) {
         </div>
 
         <label class="file-label">
-             Image voiture
+            Image voiture
             <input type="file" name="image" required>
         </label>
 
@@ -100,9 +98,8 @@ if (isset($_POST['ajouter'])) {
         <button name="ajouter">Ajouter la voiture</button>
     </form>
 
-    <a href="dashboard.php" class="back"><-- Retour dashboard</a>
-    <a href="../index.php" class="btn mt-3"><-- Retour to home page</a>
-
+    <a href="dashboard.php" class="back">← Retour dashboard</a>
+    <a href="../index.php" class="btn mt-3">← Retour to home page</a>
 </div>
 
 <?php include "../includes/footer.php"; ?>
