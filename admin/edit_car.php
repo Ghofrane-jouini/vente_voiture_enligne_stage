@@ -4,8 +4,7 @@ include "../config/db.php";
 include "../includes/header.php";
 
 $id = $_GET['id'];
-
-// 🔹 Récupérer la voiture
+// Récupérer les infos de la voiture
 $stmt = $conn->prepare("SELECT * FROM voiture WHERE id=?");
 $stmt->execute([$id]);
 $v = $stmt->fetch();
@@ -14,7 +13,6 @@ if (!$v) {
     die("Voiture introuvable");
 }
 
-// 🔹 Modifier voiture
 if (isset($_POST['modifier'])) {
 
     $marque = $_POST['marque'];
@@ -32,7 +30,7 @@ if (isset($_POST['modifier'])) {
     $promo = isset($_POST['promo']) ? 1 : 0;
     $nouveaute = isset($_POST['nouveaute']) ? 1 : 0;
 
-    // 🔹 Gestion image
+    // Gérer l'upload de l'image
     if (!empty($_FILES['image']['name'])) {
         $image = $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], "../assets/uploads/" . $image);
@@ -40,7 +38,7 @@ if (isset($_POST['modifier'])) {
         $image = $v['image'];
     }
 
-    // 🔹 UPDATE BDD
+    // Mettre à jour la voiture dans la base de données
     $stmt2 = $conn->prepare("
         UPDATE voiture SET
         marque=?, modele=?, prix=?, energie=?, garantie=?,
@@ -62,10 +60,9 @@ if (isset($_POST['modifier'])) {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/css/add_car.css">
-
+<link rel="stylesheet" href="../assets/css/global.css">
 <div class="add-car-container">
-    <h3>✏️ Modifier la voiture</h3>
+    <h3> Modifier la voiture</h3>
 
     <form method="POST" enctype="multipart/form-data">
 
@@ -102,7 +99,6 @@ if (isset($_POST['modifier'])) {
 
             <input type="number" name="puissance_fiscale" value="<?= $v['puissance_fiscale'] ?>">
 
-            <!-- Nouveau champ Quantité -->
             <input type="number" name="quantite" value="<?= $v['quantite'] ?>" min="1" required>
         </div>
 
@@ -110,7 +106,7 @@ if (isset($_POST['modifier'])) {
         <img src="../assets/uploads/<?= $v['image'] ?>" width="120" style="border-radius:10px">
 
         <label class="file-label">
-            📷 Changer l’image
+             Changer l’image
             <input type="file" name="image">
         </label>
 

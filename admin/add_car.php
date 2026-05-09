@@ -3,9 +3,9 @@ include "../auth/auth.php";
 include "../config/db.php";
 include "../includes/header.php";
 
-// 🔹 Ajouter voiture
+//  Ajouter voiture
 if (isset($_POST['ajouter'])) {
-
+    // Récupérer les données du formulaire
     $marque = $_POST['marque'];
     $modele = $_POST['modele'];
     $prix = $_POST['prix'];
@@ -21,7 +21,7 @@ if (isset($_POST['ajouter'])) {
     $promo = isset($_POST['promo']) ? 1 : 0;
     $nouveaute = isset($_POST['nouveaute']) ? 1 : 0;
 
-    // image
+    // Gérer l'upload de l'image
     $image = $_FILES['image']['name'];
     $tmp = $_FILES['image']['tmp_name'];
     move_uploaded_file($tmp, "../assets/uploads/" . $image);
@@ -46,10 +46,9 @@ if (isset($_POST['ajouter'])) {
 }
 ?>
 
-<link rel="stylesheet" href="../assets/css/add_car.css">
-
+<link rel="stylesheet" href="../assets/css/global.css">
 <div class="add-car-container">
-    <h3>➕ Ajouter une voiture</h3>
+    <h3>Ajouter une voiture</h3>
 
     <form method="POST" enctype="multipart/form-data">
 
@@ -85,13 +84,11 @@ if (isset($_POST['ajouter'])) {
             </select>
 
             <input type="number" name="puissance_fiscale" placeholder="Puissance fiscale">
-
-            <!-- Nouveau champ Quantité -->
             <input type="number" name="quantite" placeholder="Quantité" value="1" min="1" required>
         </div>
 
         <label class="file-label">
-            📷 Image voiture
+             Image voiture
             <input type="file" name="image" required>
         </label>
 
@@ -103,8 +100,8 @@ if (isset($_POST['ajouter'])) {
         <button name="ajouter">Ajouter la voiture</button>
     </form>
 
-    <a href="dashboard.php" class="back">← Retour dashboard</a>
-    <a href="../index.php" class="btn mt-3">← Retour to home page</a>
+    <a href="dashboard.php" class="back"><-- Retour dashboard</a>
+    <a href="../index.php" class="btn mt-3"><-- Retour to home page</a>
 
 </div>
 

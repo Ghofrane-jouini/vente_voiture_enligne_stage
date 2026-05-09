@@ -29,173 +29,7 @@ if (isset($_SESSION['user_id'])) {
 }
 
 ?>
-
-<style>/* ===== GENERAL ===== */
-body {
-    background-color: #f8f9fa;
-    font-family: 'Poppins', sans-serif;
-    color: #111; /* Noir */
-    
-}
-
-h1, h2, h5 {
-    color: #111; /* Noir */
-}
-
-a {
-    text-decoration: none;
-}
-
-/* ===== SECTION DETAILS ===== */
-.car-details {
-    padding: 60px 0;
-}
-
-/* ===== IMAGE BOX ===== */
-.image-box {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.image-box img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.3s ease;
-}
-
-.image-box:hover img {
-    transform: scale(1.05);
-}
-
-/* Badges */
-.badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 5px;
-    color: #fff;
-}
-
-.badge.promo {
-    background-color: #dc3545; /* rouge promo */
-}
-
-.badge.new {
-    background-color: #28a745; /* vert nouveauté */
-    top: 10px;
-    right: 10px;
-    left: auto;
-}
-
-/* ===== PRICE ===== */
-.price {
-    font-size: 1.8rem;
-    font-weight: 700;
-    margin: 15px 0;
-    color: #111; /* Noir */
-}
-
-/* ===== INFO CARD ===== */
-.info-card {
-    background-color: #5d3434a8;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    
-}
-
-.info-card h5 {
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.info-card ul {
-    list-style: none;
-    padding: 0;
-}
-
-.info-card ul li {
-    padding: 5px 0;
-    font-size: 0.95rem;
-}
-
-/* ===== BUTTONS ===== */
-.btn {
-    border-radius: 8px;
-    font-weight: 600;
-    padding: 8px 15px;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-}
-
-.btn:hover {
-    transform: translateY(-2px);
-}
-
-/* Outline Buttons */
-.btn-outline-warning {
-    color: #ffc107;
-    border-color: #ffc107;
-}
-
-.btn-outline-warning:hover {
-    background-color: #ffc107;
-    color: #111;
-}
-
-.btn-outline-danger {
-    color: #dc3545;
-    border-color: #dc3545;
-}
-
-.btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: #fff;
-}
-
-.btn-outline-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6c757d;
-    color: #fff;
-}
-
-.btn-outline-dark {
-    color: #111;
-    border-color: #111;
-}
-
-.btn-outline-dark:hover {
-    background-color: #111;
-    color: #fff;
-}
-
-/* Admin Buttons */
-.btn-warning, .btn-danger {
-    width: 100%;
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
-    .car-details .row {
-        flex-direction: column;
-    }
-
-    .image-box, .col-md-6 {
-        width: 100%;
-    }
-}
-</style>
+<link rel="stylesheet" href="../assets/css/global.css">
 <section class="car-details py-5">
     <div class="container">
         <div class="row g-4">
@@ -228,17 +62,17 @@ a {
                 <div class="info-card">
                     <h5>🧾 Caractéristiques</h5>
                     <ul>
-                        <li>⛽ Énergie : <strong><?= $car['energie'] ?></strong></li>
-                        <li>⚙️ Boîte : <strong><?= $car['boite'] ?></strong></li>
-                        <li>🛞 Transmission : <strong><?= $car['transmission'] ?></strong></li>
-                        <li>🧮 Puissance fiscale : <strong><?= $car['puissance_fiscale'] ?> CV</strong></li>
-                        <li>🔧 Cylindres : <strong><?= $car['cylindres'] ?></strong></li>
+                        <li> Énergie : <strong><?= $car['energie'] ?></strong></li>
+                        <li> Boîte : <strong><?= $car['boite'] ?></strong></li>
+                        <li> Transmission : <strong><?= $car['transmission'] ?></strong></li>
+                        <li> Puissance fiscale : <strong><?= $car['puissance_fiscale'] ?> CV</strong></li>
+                        <li> Cylindres : <strong><?= $car['cylindres'] ?></strong></li>
                     </ul>
                 </div>
 
                 <!-- CONFORT -->
                 <div class="info-card">
-                    <h5>🪑 Confort</h5>
+                    <h5> Confort</h5>
                     <ul>
                         <li>Nombre de places : <strong><?= $car['nombre_places'] ?></strong></li>
                         <li>Nombre de portes : <strong><?= $car['nombre_portes'] ?></strong></li>
@@ -247,7 +81,7 @@ a {
 
                 <!-- GARANTIE -->
                 <div class="info-card">
-                    <h5>🛡 Garantie</h5>
+                    <h5> Garantie</h5>
                     <p><strong><?= $car['garantie'] ?></strong></p>
                 </div>
 

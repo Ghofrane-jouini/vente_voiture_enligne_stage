@@ -1,24 +1,18 @@
 <?php
-
+session_start();
 include "config/db.php";
-include "auth/auth.php";
-include "includes/header.php";
 
-/* 🔐 Vérification utilisateur */
+// Vérification de l'authentification
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
     header("Location: auth/login.php");
     exit;
 }
-
+// Récupérer l'ID de l'utilisateur connecté
 $user_id = (int) $_SESSION['user_id'];
 
-/* ➕ Ajouter aux favoris */
-if (
-    isset($_GET['action'], $_GET['id']) &&
-    $_GET['action'] === 'add'
-) {
+// Ajouter aux favoris
+if (isset($_GET['action'], $_GET['id']) && $_GET['action'] === 'add') {
     $voiture_id = (int) $_GET['id'];
-
     if ($voiture_id > 0) {
         $stmt = $conn->prepare("
             INSERT INTO favoris (user_id, voiture_id)
@@ -27,29 +21,20 @@ if (
         ");
         $stmt->execute([$user_id, $voiture_id]);
     }
-
     header("Location: favoris.php");
     exit;
 }
 
-/* ❌ Supprimer des favoris */
-if (
-    isset($_GET['action'], $_GET['id']) &&
-    $_GET['action'] === 'remove'
-) {
+// Supprimer des favoris
+if (isset($_GET['action'], $_GET['id']) && $_GET['action'] === 'remove') {
     $voiture_id = (int) $_GET['id'];
-
-    $stmt = $conn->prepare("
-        DELETE FROM favoris
-        WHERE user_id = ? AND voiture_id = ?
-    ");
+    $stmt = $conn->prepare("DELETE FROM favoris WHERE user_id = ? AND voiture_id = ?");
     $stmt->execute([$user_id, $voiture_id]);
-
     header("Location: favoris.php");
     exit;
 }
 
-/* 📥 Récupération des favoris */
+// Récupération des favoris
 $stmt = $conn->prepare("
     SELECT v.*
     FROM favoris f
@@ -59,16 +44,18 @@ $stmt = $conn->prepare("
 ");
 $stmt->execute([$user_id]);
 $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+include "includes/header.php";
 ?>
 
 <div class="container py-5">
-    <h2 class="mb-4">❤️ Mes voitures favorites</h2>
+    <h2 class="mb-4"> Mes voitures favorites</h2>
 
     <?php if (empty($favoris)): ?>
         <div class="alert alert-info">
             Aucune voiture ajoutée aux favoris pour le moment.
         </div>
-        <a href="index.php" class="btn btn-dark">← Découvrir les voitures</a>
+        <a href="index.php" class="btn btn-outline-dark">← Découvrir les voitures</a>
 
     <?php else: ?>
         <div class="row g-4">
@@ -93,13 +80,13 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="d-flex justify-content-between">
                                 <a href="cars/details.php?id=<?= $car['id'] ?>"
                                    class="btn btn-outline-dark btn-sm">
-                                   Détails
+                                    Détails
                                 </a>
 
                                 <a href="favoris.php?action=remove&id=<?= $car['id'] ?>"
                                    class="btn btn-outline-danger btn-sm"
                                    onclick="return confirm('Retirer cette voiture des favoris ?');">
-                                   ❌ Retirer
+                                    ❌
                                 </a>
                             </div>
                         </div>
@@ -110,11 +97,9 @@ $favoris = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="mt-4">
             <a href="comparaison.php" class="btn btn-warning">
-                🔍 Comparer mes favoris
+                 Comparer mes favoris
             </a>
-            <a href="index.php" class="btn btn-outline-dark ms-2">
-                ← Retour
-            </a>
+            <a href="index.php" class="btn btn-outline-dark ms-2">← Retour</a>
         </div>
     <?php endif; ?>
 </div>

@@ -2,14 +2,8 @@
 include "../auth/auth.php";
 include "../config/db.php";
 include "../includes/header.php";
-
-/* ======================= */
-/*   RECHERCHE DYNAMIQUE   */
-/* ======================= */
-
 $sql = "SELECT * FROM voiture WHERE 1=1";
 $params = [];
-
 /* MARQUE */
 if (!empty($_GET['marque'])) {
     $sql .= " AND marque = ?";
@@ -48,14 +42,13 @@ $stmt->execute($params);
 $voitures = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<link rel="stylesheet" href="../assets/css/list.css">
-
+<link rel="stylesheet" href="../assets/css/global.css">
 <div class="list-container">
-    <h3>🚗 Liste des voitures</h3>
+    <h3> Liste des voitures</h3>
 
     <?php if (count($voitures) === 0): ?>
         <p style="text-align:center; color:#aaa; margin-top:20px;">
-            ❌ Aucune voiture ne correspond à votre recherche.
+            ! Aucune voiture ne correspond à votre recherche.
         </p>
     <?php endif; ?>
 

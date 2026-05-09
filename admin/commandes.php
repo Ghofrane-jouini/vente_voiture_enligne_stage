@@ -7,7 +7,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     header("Location: ../index.php");
     exit;
 }
-
 // update statut pour chaque commande
 if (isset($_GET['action'], $_GET['commande_id'])) {
     $commande_id = (int) $_GET['commande_id'];
@@ -45,17 +44,7 @@ foreach ($commandes as $c) {
 }
 ?>
 
-<!-- CSS INLINE -->
-<style>
-.container h2 { color: #d4af37; margin-bottom: 30px; text-align:center; }
-.client-card { background: #1a1a1a; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
-.client-card h4 { color: #fff; margin-bottom: 15px; }
-.car-card { background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 15px; display:flex; justify-content:space-between; align-items:center; }
-.car-info h5 { color:#d4af37; margin:0; }
-.car-info p { color:#eee; margin:0; font-size:0.9rem; }
-.badge { font-size:0.85rem; padding:0.4em 0.6em; }
-.btn-sm { font-size:0.8rem; padding:3px 7px; margin-left:5px; }
-</style>
+<link rel="stylesheet" href="../assets/css/global.css">
 
 <div class="container my-5">
     <h2>Gestion des commandes</h2>
@@ -84,7 +73,7 @@ foreach ($commandes as $c) {
                         <a href="?action=cancel&commande_id=<?= $c['id'] ?>" class="btn btn-danger btn-sm" title="Annuler">✖</a>
                         <a href="vente_agence.php?id=<?= $c['voiture_id'] ?>&tel=<?= urlencode($data['info']['telephone']) ?>" 
                         class="btn-view" style="background:purple;color:white;border:none;">
-                        🏢 Vente agence
+                         Vente agence
                         </a>
                     </div>
                 </div>
@@ -93,6 +82,6 @@ foreach ($commandes as $c) {
     <?php endforeach; ?>
 </div>
 
-<a href="../index.php" class="btn btn-outline-dark mt-4">← Retour</a>
+<a href="../index.php" class="btn btn-outline-dark mt-4"><-- Retour</a>
 
 <?php include "../includes/footer.php"; ?>

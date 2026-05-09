@@ -3,94 +3,89 @@ include "../config/db.php";
 
 if (isset($_POST['register'])) {
 
-    $nom = trim($_POST['nom']);
-    $email = trim($_POST['email']);
+    $nom       = trim($_POST['nom']);
+    $email     = trim($_POST['email']);
     $telephone = trim($_POST['telephone']);
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password  = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // 1️⃣ Vérification email déjà utilisé
     $check = $conn->prepare("SELECT id FROM users WHERE email = ?");
     $check->execute([$email]);
     if ($check->rowCount() > 0) {
-        echo "<script>alert('❌ Email déjà utilisé !');</script>";
-    }
-    // 2️⃣ Validation téléphone tunisien (8 chiffres, option +216)
-    elseif (!preg_match('/^(?:\+216)?[0-9]{8}$/', $telephone)) {
-        echo "<script>alert('❌ Numéro de téléphone invalide !');</script>";
-    }
-    // 3️⃣ Insert user
-    else {
+        $error = "Email déjà utilisé !";
+    } elseif (!preg_match('/^(?:\+216)?[0-9]{8}$/', $telephone)) {
+        $error = "Numéro de téléphone invalide !";
+    } else {
         $stmt = $conn->prepare("
             INSERT INTO users (nom, email, telephone, password)
             VALUES (:nom, :email, :telephone, :password)
         ");
-
         $stmt->execute([
-            ":nom" => $nom,
-            ":email" => $email,
+            ":nom"       => $nom,
+            ":email"     => $email,
             ":telephone" => $telephone,
-            ":password" => $password
+            ":password"  => $password
         ]);
-
-        echo "<script>alert('✅ Inscription réussie !'); window.location.href='login.php';</script>";
+        header("Location: login.php?registered=1");
         exit;
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="../assets/css/auth.css">
+    <title>Créer un compte</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
 </head>
-<body>
-    <div class="container">
-        <div class="jelly-form">
-            <div class="form-header">
-                <h2>Create Account</h2>
-            </div>
+<body class="auth-page">
 
-            <form method="POST">
-                <div class="input-group">
-                    <input type="text" name="nom" required>
-                    <label>Full Name</label>
-                    <div class="input-highlight"></div>
-                </div>
-                <div class="input-group">
-                    <input type="email" name="email" required>
-                    <label>Email</label>
-                    <div class="input-highlight"></div>
-                </div>
-                <div class="input-group">
-                    <input type="text" name="telephone" class="form-control"  required>
-                    <label>Phone Number</label>
-                    <div class="input-highlight"></div>
-                </div>
-                <div class="input-group">
-                    <input type="password" name="password" required>
-                    <label>Password</label>
-                    <div class="input-highlight"></div>
-                </div>
-                <button type="submit" name="register">
-                    <span>Sign Up</span>
-                    <div class="btn-highlight"></div>
-                </button>
-            </form>
+    <!-- Blobs décoratifs -->
+    <div class="floating-blob blob-1"></div>
+    <div class="floating-blob blob-2"></div>
 
-            <p class="auth-link">
-                Déjà inscrit ? <a href="login.php">Connexion</a>
-            </p>
-            <p class="auth-link">
-                ← <a href="../index.php">Retour à l'accueil</a>
-            </p>
+    <div class="jelly-form">
+        <div class="form-header">
+            <h2>Créer un compte</h2>
+            <p style="color:var(--muted);font-size:.88rem;margin-top:4px;">Rejoignez AutoLux Tunisia</p>
         </div>
 
-        <!-- Floating blobs -->
-        <div class="floating-blob blob-1"></div>
-        <div class="floating-blob blob-2"></div>
+        <?php if (!empty($error)): ?>
+            <div class="auth-error"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
+
+        <form method="POST">
+            <div class="input-group">
+                <input type="text" name="nom" placeholder=" " required>
+                <label>Nom complet</label>
+            </div>
+
+            <div class="input-group">
+                <input type="email" name="email" placeholder=" " required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" name="telephone" placeholder=" " required>
+                <label>Numéro de téléphone</label>
+            </div>
+
+            <div class="input-group">
+                <input type="password" name="password" placeholder=" " required>
+                <label>Mot de passe</label>
+            </div>
+
+            <button type="submit" name="register">Créer mon compte</button>
+        </form>
+
+        <p class="auth-link">
+            Déjà inscrit ? <a href="login.php">Se connecter</a>
+        </p>
+        <p class="auth-link">
+            <a href="../index.php">← Retour à l'accueil</a>
+        </p>
     </div>
+
 </body>
 </html>

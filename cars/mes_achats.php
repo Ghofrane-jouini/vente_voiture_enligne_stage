@@ -1,8 +1,8 @@
 <?php
 session_start();
 include "../config/db.php";
-include "../includes/header.php";
 
+// Vérification de l'authentification
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
     header("Location: ../auth/login.php");
     exit;
@@ -10,23 +10,20 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'user') {
 
 $user_id = $_SESSION['user_id'];
 
-// Gestion des actions Annuler / Supprimer
+// actions (annuler, supprimer)
 if (isset($_GET['action'], $_GET['id'])) {
     $commande_id = (int)$_GET['id'];
-    
+
     if ($_GET['action'] === 'cancel') {
-        // Annuler uniquement si en attente
         $stmt = $conn->prepare("UPDATE commandes SET statut='annulée' WHERE id=? AND user_id=? AND statut='en attente'");
         $stmt->execute([$commande_id, $user_id]);
     }
 
     if ($_GET['action'] === 'delete') {
-        // Supprimer n'importe quelle commande
         $stmt = $conn->prepare("DELETE FROM commandes WHERE id=? AND user_id=?");
         $stmt->execute([$commande_id, $user_id]);
     }
 
-    // Redirection pour éviter double execution au reload
     header("Location: mes_achats.php");
     exit;
 }
@@ -50,6 +47,8 @@ $stmt = $conn->prepare("
 ");
 $stmt->execute([$user_id]);
 $achats = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+include "../includes/header.php";
 ?>
 
 <div class="container my-5">
@@ -86,26 +85,27 @@ $achats = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </a>
 
                                 <?php if($a['statut'] == 'en attente'): ?>
-                                    <a href="?action=cancel&id=<?= $a['commande_id'] ?>" class="btn btn-danger btn-sm"
+                                    <a href="?action=cancel&id=<?= $a['commande_id'] ?>"
+                                       class="btn btn-danger btn-sm"
                                        onclick="return confirm('Annuler cette commande ?')">
-                                        Annuler ❌
+                                        ❌ Annuler
                                     </a>
                                 <?php endif; ?>
 
-                                <a href="?action=delete&id=<?= $a['commande_id'] ?>" class="btn btn-dark btn-sm"
+                                <a href="?action=delete&id=<?= $a['commande_id'] ?>"
+                                   class="btn btn-dark btn-sm"
                                    onclick="return confirm('Voulez-vous vraiment supprimer cette commande ?')">
-                                   Supprimer 🗑️
+                                    🗑️ Supprimer
                                 </a>
                             </div>
-
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
-    <a href="../index.php" class="btn btn-outline-dark mt-4">← Retour</a>
 
+    <a href="../index.php" class="btn btn-outline-dark mt-4">← Retour</a>
 </div>
 
 <?php include "../includes/footer.php"; ?>
